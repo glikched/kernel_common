@@ -36,7 +36,7 @@ jobs:
         git fetch android_kernel_common
         git checkout android_kernel_common/android11-5.4-lts
 
-    - name: Push changes
+    - name: Push source changes
       uses: ad-m/github-push-action@master
       with:
         branch: ${{ matrix.branch }}
