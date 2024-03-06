@@ -34,7 +34,7 @@ jobs:
       run: |
         git remote add android_kernel_common ${{ matrix.url }}
         git fetch android_kernel_common
-        git checkout android11-5.4-lts
+        git checkout android_kernel_common/android11-5.4-lts
 
     - name: Push changes
       uses: ad-m/github-push-action@master
