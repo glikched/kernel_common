@@ -1,0 +1,43 @@
+name: Pull latest Kernel Common
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - branch: "android11-5.4-lts"
+            url: "https://android.googlesource.com/kernel/common/"
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ matrix.branch }}
+        fetch-depth: 0
+
+    - name: Set up git
+      run: |
+        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+
+    - name: Pull ${{ matrix.branch }}
+      run: |
+        git remote add android_kernel_common ${{ matrix.url }}
+        git fetch android_kernel_common
+        git checkout android11-5.4-lts
+
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        branch: ${{ matrix.branch }}
+        force: true
