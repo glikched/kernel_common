@@ -43,5 +43,5 @@ jobs:
     - name: Push source changes
       uses: ad-m/github-push-action@master
       with:
-        branch: ${{ matrix.branch }}
+        branch: refs/heads/${{ matrix.branch }}
         force: true
